@@ -13,12 +13,10 @@
 
     :root {
       --ink: #111111;
-      --ink-soft: #444444;
       --gray: #888888;
       --rule: rgba(0,0,0,0.08);
       --chalk: #FAFAFA;
       --white: #FFFFFF;
-      --accent: #111111;
     }
 
     html { scroll-behavior: smooth; }
@@ -39,27 +37,18 @@
       justify-content: space-between;
       gap: 2rem;
     }
-    .header-left {}
     .header-name {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
       font-size: clamp(2.2rem, 5vw, 4rem);
       letter-spacing: -0.03em;
       line-height: 1;
-      color: var(--ink);
     }
     .header-sub {
       font-size: 0.9rem;
       color: var(--gray);
       margin-top: 0.6rem;
-      font-weight: 400;
       letter-spacing: 0.02em;
-    }
-    .header-right {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      flex-shrink: 0;
     }
     .header-link {
       font-size: 0.75rem;
@@ -74,41 +63,32 @@
     }
     .header-link:hover { color: var(--ink); border-color: var(--ink); }
 
-    /* Filter bar */
-    .filter-bar {
-      padding: 1.25rem 3rem;
-      border-bottom: 1px solid var(--rule);
+    /* Sections */
+    main { padding: 0 3rem 5rem; }
+
+    .section { padding-top: 3.5rem; }
+    .section + .section { border-top: 1px solid var(--rule); }
+
+    .section-heading {
       display: flex;
-      gap: 0.5rem;
-      align-items: center;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
     }
-    .filter-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-right: 0.75rem;
-    }
-    .filter-btn {
+    .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      padding: 0.35rem 0.9rem;
-      border-radius: 50px;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--gray);
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
     }
-    .filter-btn:hover { background: #f0f0f0; color: var(--ink); }
-    .filter-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+    .section-count {
+      font-size: 0.72rem;
+      color: var(--gray);
+    }
 
     /* Grid */
-    main {
-      padding: 2.5rem 3rem 5rem;
-    }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -195,36 +175,23 @@
     .card-arrow {
       font-size: 0.8rem;
       color: var(--gray);
-      transform: translateX(0);
       transition: transform 0.2s, color 0.2s;
     }
     .card:hover .card-arrow { transform: translateX(4px); color: var(--ink); }
 
-    /* Featured card (Coco Maria — spans 2 cols) */
+    /* Featured card */
     .card.featured {
       grid-column: span 2;
       flex-direction: row;
     }
     .card.featured .card-thumb {
-      width: 280px;
+      width: 260px;
       height: auto;
       flex-shrink: 0;
       border-radius: 0;
       font-size: 4rem;
     }
-    .card.featured .card-title { font-size: 1.2rem; }
-
-    /* Hidden card */
-    .card.hidden { display: none; }
-
-    /* Empty state */
-    .empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 4rem;
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
+    .card.featured .card-title { font-size: 1.15rem; }
 
     /* Footer */
     footer {
@@ -239,7 +206,7 @@
 
     @media (max-width: 700px) {
       header { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem 1.5rem; }
-      .filter-bar, main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
       .card.featured { grid-column: span 1; flex-direction: column; }
       .card.featured .card-thumb { width: 100%; height: 160px; }
       .grid { grid-template-columns: 1fr; }
@@ -249,146 +216,161 @@
 <body>
 
 <header>
-  <div class="header-left">
+  <div>
     <h1 class="header-name">Nuno Grazina</h1>
     <p class="header-sub">Projects, prototypes & experiments</p>
   </div>
-  <div class="header-right">
-    <a class="header-link" href="https://github.com/nunograzina10" target="_blank" rel="noopener">GitHub</a>
-    <a class="header-link" href="https://instagram.com/cocomaria11" target="_blank" rel="noopener">@cocomaria11</a>
-  </div>
+  <a class="header-link" href="https://github.com/nunograzina10" target="_blank" rel="noopener">GitHub</a>
 </header>
 
-<div class="filter-bar">
-  <span class="filter-label">Filter</span>
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="product">Product</button>
-  <button class="filter-btn" data-filter="social">Social</button>
-</div>
-
 <main>
-  <div class="grid" id="grid">
 
-    <!-- Coco Maria — featured -->
-    <a class="card featured" href="/cocomaria/" data-tags="social">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#F9B8C7,#FFE45C,#C4AEED);">🐾</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#c4447a;border-color:#f9b8c7;">Social</span>
-          <span class="card-tag" style="color:#7a5c00;border-color:#ffe45c;">Influencer</span>
-        </div>
-        <h2 class="card-title">Coco Maria · Dog Influencer Portfolio</h2>
-        <p class="card-desc">SEO-optimised brand partnership portfolio for @cocomaria11 — with a live Instagram gallery, partnership categories, and a contact section ready for brand outreach.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+  <!-- ── Personal ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-heading">
+      <span class="section-title">Personal</span>
+      <span class="section-count">2 projects</span>
+    </div>
+    <div class="grid">
 
-    <!-- Booking Confirmation -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/booking-confirmation/" data-tags="product">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#FF5F1F,#FF8C5A);">🏁</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#c44000;border-color:#ffb899;">Product</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
+      <!-- Coco Maria -->
+      <a class="card featured" href="/cocomaria/" style="animation-delay:0ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#F9B8C7,#FFE45C,#C4AEED);">🐾</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#c4447a;border-color:#f9b8c7;">Personal</span>
+            <span class="card-tag" style="color:#7a5c00;border-color:#ffe45c;">Influencer</span>
+          </div>
+          <h2 class="card-title">Coco Maria · Dog Influencer Portfolio</h2>
+          <p class="card-desc">SEO-optimised brand partnership portfolio — live Instagram gallery, partnership categories, and a contact section ready for brand outreach.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
-        <h2 class="card-title">Booking Confirmation Page</h2>
-        <p class="card-desc">Post-purchase confirmation after booking a race. Race details, receipt summary and next steps.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+      </a>
 
-    <!-- Checkout Flow -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/checkout-flow/" data-tags="product">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#FF5F1F,#e63e00);">🛒</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#c44000;border-color:#ffb899;">Product</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
+      <!-- One of One -->
+      <a class="card" href="https://one-of-one.io" target="_blank" rel="noopener" style="animation-delay:70ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#0f0f0f,#3a3a3a);">💎</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#444;border-color:#ccc;">Personal</span>
+            <span class="card-tag" style="color:#444;border-color:#ccc;">Product</span>
+          </div>
+          <h2 class="card-title">One of One</h2>
+          <p class="card-desc">A product built around uniqueness and identity. Crafted with intention.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
-        <h2 class="card-title">Checkout Flow</h2>
-        <p class="card-desc">End-to-end booking for two scenarios — directly bookable races and enquiry-based events.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+      </a>
 
-    <!-- Organizer Portal -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/organizer-portal/" data-tags="product">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#2563eb,#60a5fa);">🗂️</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#1d4ed8;border-color:#93c5fd;">Product</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
-        </div>
-        <h2 class="card-title">Organizer Portal</h2>
-        <p class="card-desc">Full back-office — create and configure races, manage bookings and athlete communications.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+    </div>
+  </section>
 
-    <!-- Onboarding & Retention -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/organizer-onboarding/" data-tags="product">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#7c3aed,#a78bfa);">🚀</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#6d28d9;border-color:#c4b5fd;">Product</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
-        </div>
-        <h2 class="card-title">Onboarding & Retention Flows</h2>
-        <p class="card-desc">13 flows across 3 phases — preference capture, account gating and re-engagement.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+  <!-- ── RaceFinder ────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-heading">
+      <span class="section-title">RaceFinder</span>
+      <span class="section-count">6 prototypes</span>
+    </div>
+    <div class="grid">
 
-    <!-- Region Filter Map -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/region-filter-map/" data-tags="product">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#059669,#34d399);">🗺️</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#065f46;border-color:#6ee7b7;">Product</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/booking-confirmation/" style="animation-delay:0ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#FF5F1F,#FF8C5A);">🏁</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#c44000;border-color:#ffb899;">Prototype</span>
+          </div>
+          <h2 class="card-title">Booking Confirmation</h2>
+          <p class="card-desc">Post-purchase confirmation after booking a race. Race details, receipt summary and next steps.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
-        <h2 class="card-title">Region Filter Map</h2>
-        <p class="card-desc">Interactive map-based race discovery with region filtering and race-type overlays.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+      </a>
 
-    <!-- Instagram Post v1 -->
-    <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/instagram-post-v1/" data-tags="product social">
-      <div class="card-thumb" style="background: linear-gradient(135deg,#f97316,#ec4899);">📸</div>
-      <div class="card-body">
-        <div class="card-tags">
-          <span class="card-tag" style="color:#c2410c;border-color:#fdba74;">Social</span>
-          <span class="card-tag" style="color:#555;border-color:#ccc;">RaceFinder</span>
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/checkout-flow/" style="animation-delay:70ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#FF5F1F,#e63e00);">🛒</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#c44000;border-color:#ffb899;">Prototype</span>
+          </div>
+          <h2 class="card-title">Checkout Flow</h2>
+          <p class="card-desc">End-to-end booking for two scenarios — directly bookable races and enquiry-based events.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
         </div>
-        <h2 class="card-title">Organizer First-Run Onboarding</h2>
-        <p class="card-desc">7-step modal over blurred portal — organisation profile, race setup and first publish flow.</p>
-        <div class="card-footer">
-          <span class="card-date">2025</span>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
+      </a>
 
-  </div>
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/organizer-portal/" style="animation-delay:140ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#2563eb,#60a5fa);">🗂️</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#1d4ed8;border-color:#93c5fd;">Prototype</span>
+          </div>
+          <h2 class="card-title">Organizer Portal</h2>
+          <p class="card-desc">Full back-office — create and configure races, manage bookings and athlete communications.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/organizer-onboarding/" style="animation-delay:210ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">🚀</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#6d28d9;border-color:#c4b5fd;">Prototype</span>
+          </div>
+          <h2 class="card-title">Onboarding & Retention Flows</h2>
+          <p class="card-desc">13 flows across 3 phases — preference capture, account gating and re-engagement.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/region-filter-map/" style="animation-delay:280ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#059669,#34d399);">🗺️</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#065f46;border-color:#6ee7b7;">Prototype</span>
+          </div>
+          <h2 class="card-title">Region Filter Map</h2>
+          <p class="card-desc">Interactive map-based race discovery with region filtering and race-type overlays.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="https://nunograzina10.github.io/racefinder-proto/prototypes/instagram-post-v1/" style="animation-delay:350ms">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#f97316,#ec4899);">📸</div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="card-tag" style="color:#c2410c;border-color:#fdba74;">Prototype</span>
+          </div>
+          <h2 class="card-title">Organizer First-Run Onboarding</h2>
+          <p class="card-desc">7-step modal over blurred portal — organisation profile, race setup and first publish flow.</p>
+          <div class="card-footer">
+            <span class="card-date">2025</span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -396,31 +378,5 @@
   <span>Built with Claude 🤖</span>
 </footer>
 
-<script>
-  // Filter
-  const btns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.card');
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
-        const tags = card.dataset.tags || '';
-        if (filter === 'all' || tags.includes(filter)) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    });
-  });
-
-  // Stagger animation
-  cards.forEach((card, i) => {
-    card.style.animationDelay = (i * 70) + 'ms';
-  });
-</script>
 </body>
 </html>
